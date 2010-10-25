@@ -22,7 +22,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define BAUD_PRESCALE(baud) (((F_CPU / (baud * 16UL))) - 1)
+#define BAUD_PRESCALE(baud) (((F_CPU / (baud * 8UL))) - 1)
 
 /* baud settings */
 static inline void
