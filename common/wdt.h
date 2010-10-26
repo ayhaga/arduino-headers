@@ -15,17 +15,21 @@
  * along with arduino-headers.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if defined(__AVR_ATmega8__)
-#  error "arduino/wdt.h: Not implemented for ATmega8 chips yet"
-#elif defined(__AVR_ATmega168__) \
-   || defined(__AVR_ATmega328P__)
-#  include <arduino/common/wdt.h>
-#elif defined(__AVR_ATmega1280__)
-#  error "arduino/wdt.h: Not implemented for ATmega1280 chips yet"
-#elif defined(__AVR_ATtiny25__) \
-   || defined(__AVR_ATtiny45__) \
-   || defined(__AVR_ATtiny85__)
-#  include <arduino/common/wdt.h>
+#ifndef _ARDUINO_WDT_H
+#define _ARDUINO_WDT_H
+
+#include <avr/wdt.h>
+#include <avr/interrupt.h>
+
+#if defined(WDTCSR)
+#  define _WDT_REG  WDTCSR
 #else
-#  error "arduino/wdt.h: Unknown chip type"
+#  define _WDT_REG  WDTCR
+#endif
+
+static inline void wdt_interrupt_enable()  { _WDT_REG |= _BV(WDIE); }
+static inline void wdt_interrupt_disable() { _WDT_REG &= ~_BV(WDIE); }
+
+#define wdt_interrupt() ISR(WDT_vect)
+
 #endif
