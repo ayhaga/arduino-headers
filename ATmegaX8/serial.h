@@ -22,13 +22,15 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#define BAUD_PRESCALE(baud) (((F_CPU / (baud * 8UL))) - 1)
+
 /* baud settings */
 static inline void
 serial_baud_2400()
 {
 	UCSR0A = (UCSR0A & ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0)))
 	       | _BV(U2X0);
-	UBRR0 = 832;
+	UBRR0 = BAUD_PRESCALE(2400);
 }
 
 static inline void
@@ -36,14 +38,14 @@ serial_baud_4800()
 {
 	UCSR0A = (UCSR0A & ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0)))
 	       | _BV(U2X0);
-	UBRR0 = 416;
+	UBRR0 = BAUD_PRESCALE(4800);
 }
 
 static inline void
 serial_baud_9600()
 {
 	UCSR0A &= ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0) | _BV(U2X0));
-	UBRR0 = 103;
+	UBRR0 = BAUD_PRESCALE(9600);
 }
 
 static inline void
@@ -51,14 +53,14 @@ serial_baud_14400()
 {
 	UCSR0A = (UCSR0A & ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0)))
 	       | _BV(U2X0);
-	UBRR0 = 138;
+	UBRR0 = BAUD_PRESCALE(14400);
 }
 
 static inline void
 serial_baud_19200()
 {
 	UCSR0A &= ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0) | _BV(U2X0));
-	UBRR0 = 51;
+	UBRR0 = BAUD_PRESCALE(19200);
 }
 
 static inline void
@@ -66,14 +68,14 @@ serial_baud_28800()
 {
 	UCSR0A = (UCSR0A & ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0)))
 	       | _BV(U2X0);
-	UBRR0 = 68;
+	UBRR0 = BAUD_PRESCALE(28800);
 }
 
 static inline void
 serial_baud_38400()
 {
 	UCSR0A &= ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0) | _BV(U2X0));
-	UBRR0 = 25;
+	UBRR0 = BAUD_PRESCALE(38400);
 }
 
 static inline void
@@ -81,21 +83,21 @@ serial_baud_57600()
 {
 	UCSR0A = (UCSR0A & ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0)))
 	       | _BV(U2X0);
-	UBRR0 = 34;
+	UBRR0 = BAUD_PRESCALE(57600);
 }
 
 static inline void
 serial_baud_250k()
 {
 	UCSR0A &= ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0) | _BV(U2X0));
-	UBRR0 = 3;
+	UBRR0 = BAUD_PRESCALE(250000);
 }
 
 static inline void
 serial_baud_500k()
 {
 	UCSR0A &= ~(_BV(FE0) | _BV(DOR0) | _BV(UPE0) | _BV(U2X0));
-	UBRR0 = 1;
+	UBRR0 = BAUD_PRESCALE(500000);
 }
 
 /* bit size */
