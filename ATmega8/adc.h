@@ -29,7 +29,7 @@ adc_reference_external()
 }
 
 static inline void
-adc_reference_internal_5v()
+adc_reference_internal_vcc()
 {
 	ADMUX = (ADMUX & ~(_BV(REFS1))) | _BV(REFS0);
 }
